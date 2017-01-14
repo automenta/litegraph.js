@@ -110,9 +110,9 @@
     var editor = new LiteGraph.Editor("main");
     window.graphcanvas = editor.graphcanvas;
     window.graph = editor.graph;
-    window.addEventListener("resize", function () {
-        editor.graphcanvas.resize();
-    });
+    window.addEventListener("resize", editor.graphcanvas.resize);
+    editor.addMiniWindow(300, 200);
+
 
 
     //create scene selector
