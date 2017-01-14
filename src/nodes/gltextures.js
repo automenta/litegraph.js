@@ -1,5 +1,5 @@
 //Works with Litegl.js to create WebGL nodes
-if(typeof(LiteGraph) != "undefined")
+if(typeof(LiteGraph) !== "undefined")
 {
 	function LGraphTexture()
 	{
@@ -44,7 +44,7 @@ if(typeof(LiteGraph) != "undefined")
 	{
 		options = options || {};
 		var url = name;
-		if(url.substr(0,7) == "http://")
+		if(url.substr(0,7) === "http://")
 		{
 			if(LiteGraph.proxy) //proxy external files
 				url = LiteGraph.proxy + url.substr(7);
@@ -63,7 +63,7 @@ if(typeof(LiteGraph) != "undefined")
 			throw("Cannot load texture, container of textures not found");
 
 		var tex = container[ name ];
-		if(!tex && name && name[0] != ":")
+		if(!tex && name && name[0] !== ":")
 			return this.loadTexture(name);
 
 		return tex;
@@ -86,7 +86,7 @@ if(typeof(LiteGraph) != "undefined")
 			default: tex_type = origin ? origin.type : gl.UNSIGNED_BYTE; break;
 		}
 
-		if(!target || target.width != origin.width || target.height != origin.height || target.type != tex_type )
+		if(!target || target.width !== origin.width || target.height !== origin.height || target.type !== tex_type )
 			target = new GL.Texture( origin.width, origin.height, { type: tex_type, format: gl.RGBA, filter: gl.LINEAR });
 
 		return target;
@@ -116,9 +116,9 @@ if(typeof(LiteGraph) != "undefined")
 		else
 		{
 			var texture = null;
-			if( typeof(data) == "string" )
+			if( typeof(data) === "string" )
 				texture = GL.Texture.fromURL( data );
-			else if( filename.toLowerCase().indexOf(".dds") != -1 )
+			else if( filename.toLowerCase().indexOf(".dds") !== -1 )
 				texture = GL.Texture.fromDDSInMemory(data);
 			else
 			{
@@ -175,11 +175,11 @@ if(typeof(LiteGraph) != "undefined")
 			if(!output)
 				continue;
 			var v = null;
-			if(output.name == "width")
+			if(output.name === "width")
 				v = tex.width;
-			else if(output.name == "height")
+			else if(output.name === "height")
 				v = tex.height;
-			else if(output.name == "aspect")
+			else if(output.name === "aspect")
 				v = tex.width / tex.height;
 			this.setOutputData(i, v);
 		}
@@ -187,7 +187,7 @@ if(typeof(LiteGraph) != "undefined")
 
 	LGraphTexture.prototype.onResourceRenamed = function(old_name,new_name)
 	{
-		if(this.properties.name == old_name)
+		if(this.properties.name === old_name)
 			this.properties.name = new_name;
 	}
 
@@ -205,7 +205,7 @@ if(typeof(LiteGraph) != "undefined")
 
 
 		//Different texture? then get it from the GPU
-		if(this._last_preview_tex != this._last_tex)
+		if(this._last_preview_tex !== this._last_tex)
 		{
 			if(ctx.webgl)
 			{
@@ -246,7 +246,7 @@ if(typeof(LiteGraph) != "undefined")
 		var size = LGraphTexture.image_preview_size;
 		var temp_tex = tex;
 
-		if(tex.format == gl.DEPTH_COMPONENT)
+		if(tex.format === gl.DEPTH_COMPONENT)
 			return null; //cannot generate from depth
 
 		//Generate low-level version in the GPU to speed up
@@ -410,7 +410,7 @@ if(typeof(LiteGraph) != "undefined")
 			return;
 
 		//only works if using a webgl renderer
-		if(this._tex.gl != ctx)
+		if(this._tex.gl !== ctx)
 			return;
 
 		//render to graph canvas
@@ -470,7 +470,7 @@ if(typeof(LiteGraph) != "undefined")
 		if(this.properties.uvcode)
 		{
 			uvcode = "uv = " + this.properties.uvcode;
-			if(this.properties.uvcode.indexOf(";") != -1) //there are line breaks, means multiline code
+			if(this.properties.uvcode.indexOf(";") !== -1) //there are line breaks, means multiline code
 				uvcode = this.properties.uvcode;
 		}
 		
@@ -478,13 +478,13 @@ if(typeof(LiteGraph) != "undefined")
 		if(this.properties.pixelcode)
 		{
 			pixelcode = "result = " + this.properties.pixelcode;
-			if(this.properties.pixelcode.indexOf(";") != -1) //there are line breaks, means multiline code
+			if(this.properties.pixelcode.indexOf(";") !== -1) //there are line breaks, means multiline code
 				pixelcode = this.properties.pixelcode;
 		}
 
 		var shader = this._shader;
 
-		if(!shader || this._shader_code != (uvcode + "|" + pixelcode) )
+		if(!shader || this._shader_code !== (uvcode + "|" + pixelcode) )
 		{
 			try
 			{
@@ -512,7 +512,7 @@ if(typeof(LiteGraph) != "undefined")
 			this.boxcolor = "green";
 
 		var value = this.getInputData(2);
-		if(value != null)
+		if(value !== null)
 			this.properties.value = value;
 		else
 			value = parseFloat( this.properties.value );
@@ -580,7 +580,7 @@ if(typeof(LiteGraph) != "undefined")
 			return; //saves work
 
 		//replug 
-		if(this._shader_code != this.properties.code)
+		if(this._shader_code !== this.properties.code)
 		{
 			this._shader_code = this.properties.code;
 			this._shader = new GL.Shader(Shader.SCREEN_VERTEX_SHADER, LGraphTextureShader.pixel_shader + this.properties.code );
@@ -629,7 +629,7 @@ if(typeof(LiteGraph) != "undefined")
 			*/
 		}
 
-		if(!this._tex || this._tex.width != this.properties.width || this._tex.height != this.properties.height )
+		if(!this._tex || this._tex.width !== this.properties.width || this._tex.height !== this.properties.height )
 			this._tex = new GL.Texture( this.properties.width, this.properties.height, { format: gl.RGBA, filter: gl.LINEAR });
 		var tex = this._tex;
 		var shader = this._shader;
@@ -686,7 +686,7 @@ if(typeof(LiteGraph) != "undefined")
 		if (this.precision === LGraphTexture.DEFAULT)
 			type = tex.type;
 
-		if(!this._tex || this._tex.width != width || this._tex.height != height || this._tex.type != type )
+		if(!this._tex || this._tex.width !== width || this._tex.height !== height || this._tex.type !== type )
 			this._tex = new GL.Texture( width, height, { type: type, format: gl.RGBA, filter: gl.LINEAR });
 
 		var shader = this._shader;
@@ -803,7 +803,7 @@ if(typeof(LiteGraph) != "undefined")
 			shader = new GL.Shader( GL.Shader.SCREEN_VERTEX_SHADER, LGraphTextureWarp.pixel_shader );
 
 		var factor = this.getInputData(2);
-		if(factor != null)
+		if(factor !== null)
 			this.properties.factor = factor;
 		else
 			factor = parseFloat( this.properties.factor );
@@ -886,7 +886,7 @@ if(typeof(LiteGraph) != "undefined")
 		}
 		else
 		{
-			if(gamma != 1.0)
+			if(gamma !== 1.0)
 			{
 				if(!LGraphTextureToViewport._gamma_shader)
 					LGraphTextureToViewport._gamma_shader = new GL.Shader( Shader.SCREEN_VERTEX_SHADER, LGraphTextureToViewport.gamma_pixel_shader );
@@ -1008,7 +1008,7 @@ if(typeof(LiteGraph) != "undefined")
 			var width = tex.width;
 			var height = tex.height;
 
-			if(this.properties.size != 0)
+			if(this.properties.size !== 0)
 			{
 				width = this.properties.size;
 				height = this.properties.size;
@@ -1022,7 +1022,7 @@ if(typeof(LiteGraph) != "undefined")
 			else if(this.properties.precision === LGraphTexture.HIGH)
 				type = gl.HIGH_PRECISION_FORMAT;
 
-			if(!temp || temp.width != width || temp.height != height || temp.type != type )
+			if(!temp || temp.width !== width || temp.height !== height || temp.type !== type )
 			{
 				var minFilter = gl.LINEAR;
 				if( this.properties.generate_mipmaps && isPowerOfTwo(width) && isPowerOfTwo(height) )
@@ -1077,7 +1077,7 @@ if(typeof(LiteGraph) != "undefined")
 
 		var temp = this._temp_texture;
 		var type = this.properties.low_precision ? gl.UNSIGNED_BYTE : tex.type;
-		if(!temp || temp.type != type )
+		if(!temp || temp.type !== type )
 			this._temp_texture = new GL.Texture( 1, 1, { type: type, format: gl.RGBA, filter: gl.NEAREST });
 
 		var shader = LGraphTextureAverage._shader;
@@ -1139,7 +1139,7 @@ if(typeof(LiteGraph) != "undefined")
 
 
 		var temp = this._temp_texture;
-		if(!temp || temp.width != width || temp.height != height )
+		if(!temp || temp.width !== width || temp.height !== height )
 			this._temp_texture = new GL.Texture( width, height, { format: gl.RGBA, filter: gl.LINEAR });
 
 		try
@@ -1289,7 +1289,7 @@ if(typeof(LiteGraph) != "undefined")
 		{
 			if(this.isOutputConnected(i))
 			{
-				if(!this._channels[i] || this._channels[i].width != texA.width || this._channels[i].height != texA.height || this._channels[i].type != texA.type)
+				if(!this._channels[i] || this._channels[i].width !== texA.width || this._channels[i].height !== texA.height || this._channels[i].type !== texA.type)
 					this._channels[i] = new GL.Texture( texA.width, texA.height, { type: texA.type, format: gl.RGBA, filter: gl.LINEAR });
 				connections++;
 			}
@@ -1451,7 +1451,7 @@ if(typeof(LiteGraph) != "undefined")
 		vec3.copy( uniforms.u_colorB, B );
 
 		var size = parseInt( this.properties.texture_size );
-		if(!this._tex || this._tex.width != size )
+		if(!this._tex || this._tex.width !== size )
 			this._tex = new GL.Texture( size, size, { format: gl.RGB, filter: gl.LINEAR });
 
 		this._tex.drawTo( function() {
@@ -1662,8 +1662,8 @@ if(typeof(LiteGraph) != "undefined")
 		if(this.properties.high_precision)
 			precision = gl.half_float_ext ? gl.HALF_FLOAT_OES : gl.FLOAT;			
 
-		if(!this._temp_texture || this._temp_texture.type != precision ||
-			this._temp_texture.width != tex.width || this._temp_texture.height != tex.height)
+		if(!this._temp_texture || this._temp_texture.type !== precision ||
+			this._temp_texture.width !== tex.width || this._temp_texture.height !== tex.height)
 			this._temp_texture = new GL.Texture( tex.width, tex.height, { type: precision, format: gl.RGBA, filter: gl.LINEAR });
 
 		//iterations
@@ -1753,7 +1753,7 @@ if(typeof(LiteGraph) != "undefined")
 
 		var temp = this._temp_texture;
 
-		if(!temp || temp.width != tex.width || temp.height != tex.height || temp.type != tex.type )
+		if(!temp || temp.width !== tex.width || temp.height !== tex.height || temp.type !== tex.type )
 		{
 			//we need two textures to do the blurring
 			this._temp_texture = new GL.Texture( tex.width, tex.height, { type: tex.type, format: gl.RGBA, filter: gl.LINEAR });
@@ -1768,7 +1768,7 @@ if(typeof(LiteGraph) != "undefined")
 			this.properties.iterations = iterations;
 		}
 		iterations = Math.min( Math.floor(iterations), LGraphTextureBlur.max_iterations );
-		if(iterations == 0) //skip blurring
+		if(iterations === 0) //skip blurring
 		{
 			this.setOutputData(0, tex);
 			return;
@@ -1851,7 +1851,7 @@ if(typeof(LiteGraph) != "undefined")
 
 		var temp = this._temp_texture;
 
-		if(!temp || temp.width != tex.width || temp.height != tex.height || temp.type != tex.type )
+		if(!temp || temp.width !== tex.width || temp.height !== tex.height || temp.type !== tex.type )
 		{
 			//we need two textures to do the blurring
 			this._temp_texture = new GL.Texture( tex.width, tex.height, { type: tex.type, format: gl.RGBA, filter: gl.LINEAR });
@@ -1861,7 +1861,7 @@ if(typeof(LiteGraph) != "undefined")
 		//iterations
 		var radius = this.properties.radius;
 		radius = Math.min( Math.floor(radius), LGraphTextureKuwaharaFilter.max_radius );
-		if(radius == 0) //skip blurring
+		if(radius === 0) //skip blurring
 		{
 			this.setOutputData(0, tex);
 			return;
@@ -2081,7 +2081,7 @@ LGraphTextureKuwaharaFilter.pixel_shader = "\n\
 
 	LGraphTextureWebcam.prototype.onExecute = function()
 	{
-		if(this._webcam_stream == null && !this._waiting_confirmation)
+		if(this._webcam_stream === null && !this._waiting_confirmation)
 			this.openStream();
 
 		if(!this._video || !this._video.videoWidth)
@@ -2091,7 +2091,7 @@ LGraphTextureKuwaharaFilter.pixel_shader = "\n\
 		var height = this._video.videoHeight;
 
 		var temp = this._temp_texture;
-		if(!temp || temp.width != width || temp.height != height )
+		if(!temp || temp.width !== width || temp.height !== height )
 			this._temp_texture = new GL.Texture( width, height, { format: gl.RGB, filter: gl.LINEAR });
 
 		this._temp_texture.uploadImage( this._video );
@@ -2202,7 +2202,7 @@ LGraphTextureKuwaharaFilter.pixel_shader = "\n\
 		}
 		else
 		{
-			if( typeof(data) == "string" )
+			if( typeof(data) === "string" )
 				this._drop_texture = GL.Texture.fromURL(data);
 			else
 				this._drop_texture = GL.Texture.fromDDSInMemory(data);

@@ -13,7 +13,7 @@ Converter.desc = "type A to type B";
 Converter.prototype.onExecute = function()
 {
 	var v = this.getInputData(0);
-	if(v == null)
+	if(v === null)
 		return;
 
 	if(this.outputs)
@@ -199,7 +199,7 @@ MathClamp.filter = "shader";
 MathClamp.prototype.onExecute = function()
 {
 	var v = this.getInputData(0);
-	if(v == null) return;
+	if(v === null) return;
 	v = Math.max(this.properties.min,v);
 	v = Math.min(this.properties.max,v);
 	this.setOutputData(0, v );
@@ -233,10 +233,10 @@ MathLerp.desc = "Linear Interpolation";
 MathLerp.prototype.onExecute = function()
 {
 	var v1 = this.getInputData(0);
-	if(v1 == null)
+	if(v1 === null)
 		v1 = 0;
 	var v2 = this.getInputData(1);
-	if(v2 == null)
+	if(v2 === null)
 		v2 = 0;
 
 	var f = this.properties.f;
@@ -271,7 +271,7 @@ MathAbs.desc = "Absolute";
 MathAbs.prototype.onExecute = function()
 {
 	var v = this.getInputData(0);
-	if(v == null) return;
+	if(v === null) return;
 	this.setOutputData(0, Math.abs(v) );
 }
 
@@ -292,7 +292,7 @@ MathFloor.desc = "Floor number to remove fractional part";
 MathFloor.prototype.onExecute = function()
 {
 	var v = this.getInputData(0);
-	if(v == null) return;
+	if(v === null) return;
 	this.setOutputData(0, Math.floor(v) );
 }
 
@@ -313,7 +313,7 @@ MathFrac.desc = "Returns fractional part";
 MathFrac.prototype.onExecute = function()
 {
 	var v = this.getInputData(0);
-	if(v == null) 
+	if(v === null)
 		return;
 	this.setOutputData(0, v%1 );
 }
@@ -367,7 +367,7 @@ MathScale.desc = "v * factor";
 MathScale.prototype.onExecute = function()
 {
 	var value = this.getInputData(0);
-	if(value != null)
+	if(value !== null)
 		this.setOutputData(0, value * this.properties.factor );
 }
 
@@ -391,7 +391,7 @@ MathAverageFilter.desc = "Average Filter";
 MathAverageFilter.prototype.onExecute = function()
 {
 	var v = this.getInputData(0);
-	if(v == null)
+	if(v === null)
 		v = 0;
 
 	var num_samples = this._values.length;
@@ -445,7 +445,7 @@ MathOperation["@OP"] = { type:"enum", title: "operation", values: MathOperation.
 
 MathOperation.prototype.setValue = function(v)
 {
-	if( typeof(v) == "string") v = parseFloat(v);
+	if( typeof(v) === "string") v = parseFloat(v);
 	this.properties["value"] = v;
 }
 
@@ -453,12 +453,12 @@ MathOperation.prototype.onExecute = function()
 {
 	var A = this.getInputData(0);
 	var B = this.getInputData(1);
-	if(A!=null)
+	if(A!==null)
 		this.properties["A"] = A;
 	else
 		A = this.properties["A"];
 
-	if(B!=null)
+	if(B!==null)
 		this.properties["B"] = B;
 	else
 		B = this.properties["B"];
@@ -530,8 +530,8 @@ MathCompare.prototype.onExecute = function()
 			continue;
 		switch( output.name )
 		{
-			case "A==B": value = A==B; break;
-			case "A!=B": value = A!=B; break;
+			case "A==B": value = A===B; break;
+			case "A!=B": value = A!==B; break;
 			case "A>B": value = A>B; break;
 			case "A<B": value = A<B; break;
 			case "A<=B": value = A<=B; break;
@@ -585,8 +585,8 @@ MathCondition.prototype.onExecute = function()
 	{
 		case ">": result = A>B; break;
 		case "<": result = A<B; break;
-		case "==": result = A==B; break;
-		case "!=": result = A!=B; break;
+		case "==": result = A===B; break;
+		case "!=": result = A!==B; break;
 		case "<=": result = A<=B; break;
 		case ">=": result = A>=B; break;
 	}
@@ -641,15 +641,15 @@ MathTrigonometry.filter = "shader";
 MathTrigonometry.prototype.onExecute = function()
 {
 	var v = this.getInputData(0);
-	if(v == null)
+	if(v === null)
 		v = 0;
 	var amplitude = this.properties["amplitude"];
 	var slot = this.findInputSlot("amplitude");
-	if(slot != -1)
+	if(slot !== -1)
 		amplitude = this.getInputData(slot);
 	var offset = this.properties["offset"];
 	slot = this.findInputSlot("offset");
-	if(slot != -1)
+	if(slot !== -1)
 		offset = this.getInputData(slot);
 
 	for(var i = 0, l = this.outputs.length; i < l; ++i)
@@ -702,12 +702,12 @@ if(window.math)
 	{
 		var x = this.getInputData(0);
 		var y = this.getInputData(1);
-		if(x != null)
+		if(x !== null)
 			this.properties["x"] = x;
 		else
 			x = this.properties["x"];
 
-		if(y!=null)
+		if(y!==null)
 			this.properties["y"] = y;
 		else
 			y = this.properties["y"];
@@ -745,7 +745,7 @@ Math3DVec2ToXYZ.desc = "vector 2 to components";
 Math3DVec2ToXYZ.prototype.onExecute = function()
 {
 	var v = this.getInputData(0);
-	if(v == null) return;
+	if(v === null) return;
 
 	this.setOutputData( 0, v[0] );
 	this.setOutputData( 1, v[1] );
@@ -768,9 +768,9 @@ Math3DXYToVec2.desc = "components to vector2";
 Math3DXYToVec2.prototype.onExecute = function()
 {
 	var x = this.getInputData(0);
-	if(x == null) x = this.properties.x;
+	if(x === null) x = this.properties.x;
 	var y = this.getInputData(1);
-	if(y == null) y = this.properties.y;
+	if(y === null) y = this.properties.y;
 
 	var data = this._data;
 	data[0] = x;
@@ -798,7 +798,7 @@ Math3DVec3ToXYZ.desc = "vector 3 to components";
 Math3DVec3ToXYZ.prototype.onExecute = function()
 {
 	var v = this.getInputData(0);
-	if(v == null) return;
+	if(v === null) return;
 
 	this.setOutputData( 0, v[0] );
 	this.setOutputData( 1, v[1] );
@@ -822,11 +822,11 @@ Math3DXYZToVec3.desc = "components to vector3";
 Math3DXYZToVec3.prototype.onExecute = function()
 {
 	var x = this.getInputData(0);
-	if(x == null) x = this.properties.x;
+	if(x === null) x = this.properties.x;
 	var y = this.getInputData(1);
-	if(y == null) y = this.properties.y;
+	if(y === null) y = this.properties.y;
 	var z = this.getInputData(2);
-	if(z == null) z = this.properties.z;
+	if(z === null) z = this.properties.z;
 
 	var data = this._data;
 	data[0] = x;
@@ -855,7 +855,7 @@ Math3DVec4ToXYZW.desc = "vector 4 to components";
 Math3DVec4ToXYZW.prototype.onExecute = function()
 {
 	var v = this.getInputData(0);
-	if(v == null) return;
+	if(v === null) return;
 
 	this.setOutputData( 0, v[0] );
 	this.setOutputData( 1, v[1] );
@@ -880,13 +880,13 @@ Math3DXYZWToVec4.desc = "components to vector4";
 Math3DXYZWToVec4.prototype.onExecute = function()
 {
 	var x = this.getInputData(0);
-	if(x == null) x = this.properties.x;
+	if(x === null) x = this.properties.x;
 	var y = this.getInputData(1);
-	if(y == null) y = this.properties.y;
+	if(y === null) y = this.properties.y;
 	var z = this.getInputData(2);
-	if(z == null) z = this.properties.z;
+	if(z === null) z = this.properties.z;
 	var w = this.getInputData(3);
-	if(w == null) w = this.properties.w;
+	if(w === null) w = this.properties.w;
 
 	var data = this._data;
 	data[0] = x;
@@ -943,9 +943,9 @@ if(window.glMatrix)
 	Math3DRotation.prototype.onExecute = function()
 	{
 		var angle = this.getInputData(0);
-		if(angle == null) angle = this.properties.angle;
+		if(angle === null) angle = this.properties.angle;
 		var axis = this.getInputData(1);
-		if(axis == null) axis = this.properties.axis;
+		if(axis === null) axis = this.properties.axis;
 
 		var R = quat.setAxisAngle( this._value, axis, angle * 0.0174532925 );
 		this.setOutputData( 0, R );
@@ -969,9 +969,9 @@ if(window.glMatrix)
 	Math3DRotateVec3.prototype.onExecute = function()
 	{
 		var vec = this.getInputData(0);
-		if(vec == null) vec = this.properties.vec;
+		if(vec === null) vec = this.properties.vec;
 		var quat = this.getInputData(1);
-		if(quat == null)
+		if(quat === null)
 			this.setOutputData(vec);
 		else
 			this.setOutputData( 0, vec3.transformQuat( vec3.create(), vec, quat ) );
@@ -995,9 +995,9 @@ if(window.glMatrix)
 	Math3DMultQuat.prototype.onExecute = function()
 	{
 		var A = this.getInputData(0);
-		if(A == null) return;
+		if(A === null) return;
 		var B = this.getInputData(1);
-		if(B == null) return;
+		if(B === null) return;
 
 		var R = quat.multiply( this._value, A, B );
 		this.setOutputData( 0, R );
@@ -1021,13 +1021,13 @@ if(window.glMatrix)
 	Math3DQuatSlerp.prototype.onExecute = function()
 	{
 		var A = this.getInputData(0);
-		if(A == null)
+		if(A === null)
 			return;
 		var B = this.getInputData(1);
-		if(B == null)
+		if(B === null)
 			return;
 		var factor = this.properties.factor;
-		if( this.getInputData(2) != null )
+		if( this.getInputData(2) !== null )
 			factor = this.getInputData(2);
 
 		var R = quat.slerp( this._value, A, B, factor );

@@ -56,7 +56,7 @@ Subgraph.prototype.onSubgraphNewGlobalInput = function(name, type)
 Subgraph.prototype.onSubgraphRenamedGlobalInput = function(oldname, name)
 {
 	var slot = this.findInputSlot( oldname );
-	if(slot == -1)
+	if(slot === -1)
 		return;
 	var info = this.getInputInfo(slot);
 	info.name = name;
@@ -65,7 +65,7 @@ Subgraph.prototype.onSubgraphRenamedGlobalInput = function(oldname, name)
 Subgraph.prototype.onSubgraphTypeChangeGlobalInput = function(name, type)
 {
 	var slot = this.findInputSlot( name );
-	if(slot == -1)
+	if(slot === -1)
 		return;
 	var info = this.getInputInfo(slot);
 	info.type = type;
@@ -82,7 +82,7 @@ Subgraph.prototype.onSubgraphNewGlobalOutput = function(name, type)
 Subgraph.prototype.onSubgraphRenamedGlobalOutput = function(oldname, name)
 {
 	var slot = this.findOutputSlot( oldname );
-	if(slot == -1)
+	if(slot === -1)
 		return;
 	var info = this.getOutputInfo(slot);
 	info.name = name;
@@ -91,7 +91,7 @@ Subgraph.prototype.onSubgraphRenamedGlobalOutput = function(oldname, name)
 Subgraph.prototype.onSubgraphTypeChangeGlobalOutput = function(name, type)
 {
 	var slot = this.findOutputSlot( name );
-	if(slot == -1)
+	if(slot === -1)
 		return;
 	var info = this.getOutputInfo(slot);
 	info.type = type;
@@ -178,11 +178,11 @@ function GlobalInput()
 			return input_name;
 		},
 		set: function(v) {
-			if(v == "")
+			if(v === "")
 				return;
 
 			var info = that.getOutputInfo(0);
-			if(info.name == v)
+			if(info.name === v)
 				return;
 			info.name = v;
 			if(that.graph)
@@ -245,11 +245,11 @@ function GlobalOutput()
 			return output_name;
 		},
 		set: function(v) {
-			if(v == "")
+			if(v === "")
 				return;
 
 			var info = that.getInputInfo(0);
-			if(info.name == v)
+			if(info.name === v)
 				return;
 			info.name = v;
 			if(that.graph)
@@ -301,7 +301,7 @@ Constant.desc = "Constant value";
 
 Constant.prototype.setValue = function(v)
 {
-	if( typeof(v) == "string") v = parseFloat(v);
+	if( typeof(v) === "string") v = parseFloat(v);
 	this.properties["value"] = v;
 	this.setDirtyCanvas(true);
 };
@@ -319,7 +319,7 @@ Constant.prototype.onDrawBackground = function(ctx)
 
 Constant.prototype.onWidget = function(e,widget)
 {
-	if(widget.name == "value")
+	if(widget.name === "value")
 		this.setValue(widget.value);
 }
 
@@ -347,7 +347,7 @@ Watch.prototype.onExecute = function()
 Watch.prototype.onDrawBackground = function(ctx)
 {
 	//show the current value
-	if(this.inputs[0] && this.properties["value"] != null)	
+	if(this.inputs[0] && this.properties["value"] !== null)
 	{
 		if (this.properties["value"].constructor === Number )
 			this.inputs[0].label = this.properties["value"].toFixed(3);
@@ -379,11 +379,11 @@ Console.desc = "Show value inside the console";
 
 Console.prototype.onAction = function(action, param)
 {
-	if(action == "log")
+	if(action === "log")
 		console.log( param );
-	else if(action == "warn")
+	else if(action === "warn")
 		console.warn( param );
-	else if(action == "error")
+	else if(action === "error")
 		console.error( param );
 }
 

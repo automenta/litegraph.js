@@ -18,7 +18,7 @@ GraphicsImage.supported_extensions = ["jpg","jpeg","png","gif"];
 
 GraphicsImage.prototype.onAdded = function()
 {
-	if(this.properties["url"] != "" && this.img == null)
+	if(this.properties["url"] !== "" && this.img === null)
 	{
 		this.loadImage( this.properties["url"] );
 	}
@@ -46,7 +46,7 @@ GraphicsImage.prototype.onExecute = function()
 GraphicsImage.prototype.onPropertyChanged = function(name,value)
 {
 	this.properties[name] = value;
-	if (name == "url" && value != "")
+	if (name === "url" && value !== "")
 		this.loadImage(value);
 
 	return true;
@@ -54,7 +54,7 @@ GraphicsImage.prototype.onPropertyChanged = function(name,value)
 
 GraphicsImage.prototype.loadImage = function( url, callback )
 {
-	if(url == "")
+	if(url === "")
 	{
 		this.img = null;
 		return;
@@ -62,7 +62,7 @@ GraphicsImage.prototype.loadImage = function( url, callback )
 
 	this.img = document.createElement("img");
 
-	if(url.substr(0,7) == "http://")
+	if(url.substr(0,7) === "http://")
 	{
 		if(LiteGraph.proxy) //proxy external files
 			url = LiteGraph.proxy + url.substr(7);
@@ -84,7 +84,7 @@ GraphicsImage.prototype.loadImage = function( url, callback )
 
 GraphicsImage.prototype.onWidget = function(e,widget)
 {
-	if(widget.name == "load")
+	if(widget.name === "load")
 	{
 		this.loadImage(this.properties["url"]);
 	}
@@ -121,29 +121,29 @@ ColorPalette.prototype.onExecute = function()
 {
 	var c = [];
 
-	if (this.properties.colorA != null)
+	if (this.properties.colorA !== null)
 		c.push( hex2num( this.properties.colorA ) );
-	if (this.properties.colorB != null)
+	if (this.properties.colorB !== null)
 		c.push( hex2num( this.properties.colorB ) );
-	if (this.properties.colorC != null)
+	if (this.properties.colorC !== null)
 		c.push( hex2num( this.properties.colorC ) );
-	if (this.properties.colorD != null)
+	if (this.properties.colorD !== null)
 		c.push( hex2num( this.properties.colorD ) );
 
 	var f = this.getInputData(0);
-	if(f == null) f = 0.5;
+	if(f === null) f = 0.5;
 	if (f > 1.0)
 		f = 1.0;
 	else if (f < 0.0)
 		f = 0.0;
 
-	if(c.length == 0)
+	if(c.length === 0)
 		return;
 
 	var result = [0,0,0];
-	if(f == 0)
+	if(f === 0)
 		result = c[0];
-	else if(f == 1)
+	else if(f === 1)
 		result = c[ c.length - 1];
 	else
 	{
@@ -198,12 +198,12 @@ ImageFrame.prototype.onExecute = function()
 
 ImageFrame.prototype.onWidget = function(e,widget)
 {
-	if(widget.name == "resize" && this.frame)
+	if(widget.name === "resize" && this.frame)
 	{
 		var width = this.frame.width;
 		var height = this.frame.height;
 
-		if(!width && this.frame.videoWidth != null )
+		if(!width && this.frame.videoWidth !== null )
 		{
 			width = this.frame.videoWidth;
 			height = this.frame.videoHeight;
@@ -213,7 +213,7 @@ ImageFrame.prototype.onWidget = function(e,widget)
 			this.size = [width, height];
 		this.setDirtyCanvas(true,true);
 	}
-	else if(widget.name == "view")
+	else if(widget.name === "view")
 		this.show();
 }
 
@@ -342,20 +342,20 @@ ImageFade.prototype.onExecute = function()
 	this.canvas.width = this.canvas.width;
 
 	var A = this.getInputData(0);
-	if (A != null)
+	if (A !== null)
 	{
 		ctx.drawImage(A,0,0,this.canvas.width, this.canvas.height);
 	}
 
 	var fade = this.getInputData(2);
-	if(fade == null)
+	if(fade === null)
 		fade = this.properties["fade"];
 	else
 		this.properties["fade"] = fade;
 
 	ctx.globalAlpha = fade;
 	var B = this.getInputData(1);
-	if (B != null)
+	if (B !== null)
 	{
 		ctx.drawImage(B,0,0,this.canvas.width, this.canvas.height);
 	}
@@ -421,10 +421,10 @@ ImageCrop.prototype.onPropertyChanged = function(name,value)
 {
 	this.properties[name] = value;
 
-	if(name == "scale")
+	if(name === "scale")
 	{
 		this.properties[name] = parseFloat(value);
-		if(this.properties[name] == 0)
+		if(this.properties[name] === 0)
 		{
 			this.trace("Error in scale");
 			this.properties[name] = 1.0;
@@ -457,10 +457,10 @@ ImageVideo.prototype.onExecute = function()
 	if(!this.properties.url)
 		return;
 
-	if(this.properties.url != this._video_url)
+	if(this.properties.url !== this._video_url)
 		this.loadVideo(this.properties.url);
 
-	if(!this._video || this._video.width == 0)
+	if(!this._video || this._video.width === 0)
 		return;
 
 	var t = this.getInputData(0);
@@ -485,7 +485,7 @@ ImageVideo.prototype.onStart = function()
 ImageVideo.prototype.onStop = function()
 {
 	this.stop();
-}
+};
 
 ImageVideo.prototype.loadVideo = function(url)
 {
@@ -538,22 +538,22 @@ ImageVideo.prototype.loadVideo = function(url)
 	});
 
 	//document.body.appendChild(this.video);
-}
+};
 
 ImageVideo.prototype.onPropertyChanged = function(name,value)
 {
 	this.properties[name] = value;
-	if (name == "url" && value != "")
+	if (name === "url" && value !== "")
 		this.loadVideo(value);
 
 	return true;
-}
+};
 
 ImageVideo.prototype.play = function()
 {
 	if(this._video)
 		this._video.play();
-}
+};
 
 ImageVideo.prototype.playPause = function()
 {
@@ -563,7 +563,7 @@ ImageVideo.prototype.playPause = function()
 		this.play();
 	else
 		this.pause();
-}
+};
 
 ImageVideo.prototype.stop = function()
 {
@@ -571,7 +571,7 @@ ImageVideo.prototype.stop = function()
 		return;
 	this._video.pause();
 	this._video.currentTime = 0;
-}
+};
 
 ImageVideo.prototype.pause = function()
 {
@@ -579,7 +579,7 @@ ImageVideo.prototype.pause = function()
 		return;
 	this.trace("Video paused");
 	this._video.pause();
-}
+};
 
 ImageVideo.prototype.onWidget = function(e,widget)
 {
@@ -603,7 +603,7 @@ ImageVideo.prototype.onWidget = function(e,widget)
 			this._video.muted = !this._video.muted;
 	}
 	*/
-}
+};
 
 LiteGraph.registerNodeType("graphics/video", ImageVideo );
 
@@ -641,7 +641,7 @@ ImageWebcam.prototype.openStream = function()
 		that._webcam_stream = false;
 		that.box_color = "red";
 	};
-}
+};
 
 ImageWebcam.prototype.onRemoved = function()
 {
@@ -651,7 +651,7 @@ ImageWebcam.prototype.onRemoved = function()
 		this._webcam_stream = null;
 		this._video = null;
 	}
-}
+};
 
 ImageWebcam.prototype.streamReady = function(localMediaStream)
 {
@@ -672,11 +672,11 @@ ImageWebcam.prototype.streamReady = function(localMediaStream)
 			console.log(e);
 		};
 	}
-},
+};
 
 ImageWebcam.prototype.onExecute = function()
 {
-	if(this._webcam_stream == null && !this._waiting_confirmation)
+	if(this._webcam_stream === null && !this._waiting_confirmation)
 		this.openStream();
 
 	if(!this._video || !this._video.videoWidth) return;
@@ -684,7 +684,7 @@ ImageWebcam.prototype.onExecute = function()
 	this._video.width = this._video.videoWidth;
 	this._video.height = this._video.videoHeight;
 	this.setOutputData(0, this._video);
-}
+};
 
 ImageWebcam.prototype.getExtraMenuOptions = function(graphcanvas)
 {
@@ -695,7 +695,7 @@ ImageWebcam.prototype.getExtraMenuOptions = function(graphcanvas)
 			that.properties.show = !that.properties.show;
 		}
 	}];
-}
+};
 
 ImageWebcam.prototype.onDrawBackground = function(ctx)
 {
@@ -709,7 +709,7 @@ ImageWebcam.prototype.onDrawBackground = function(ctx)
 	ctx.save();
 	ctx.drawImage(this._video, 0, 0, this.size[0], this.size[1]);
 	ctx.restore();
-}
+};
 
 LiteGraph.registerNodeType("graphics/webcam", ImageWebcam );
 

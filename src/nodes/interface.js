@@ -138,7 +138,7 @@
 		ctx.textAlign = "center";
 
 		var str = this.properties["value"];
-		if(typeof(str) == 'number')
+		if(typeof(str) === 'number')
 			str = str.toFixed(2);
 
 		ctx.fillText(str,this.size[0] * 0.5,this.size[1]*0.65);
@@ -212,24 +212,24 @@
 	
 	WidgetKnob.prototype.onWidget = function(e,widget)
 	{
-		if(widget.name=="increase")
+		if(widget.name==="increase")
 			this.onPropertyChanged("size", this.properties.size + 10);
-		else if(widget.name=="decrease")
+		else if(widget.name==="decrease")
 			this.onPropertyChanged("size", this.properties.size - 10);
 	}
 
 	WidgetKnob.prototype.onPropertyChanged = function(name,value)
 	{
-		if(name=="wcolor")
+		if(name==="wcolor")
 			this.properties[name] = value;
-		else if(name=="size")
+		else if(name==="size")
 		{
 			value = parseInt(value);
 			this.properties[name] = value;
 			this.size = [value+4,value+24];
 			this.setDirtyCanvas(true,true);
 		}
-		else if(name=="min" || name=="max" || name=="value")
+		else if(name==="min" || name==="max" || name==="value")
 		{
 			this.properties[name] = parseFloat(value);
 		}
@@ -353,7 +353,7 @@
 
 	WidgetHSlider.prototype.onPropertyChanged = function(name,value)
 	{
-		if(name=="wcolor")
+		if(name==="wcolor")
 			this.properties[name] = value;
 		else
 			return false;
@@ -376,7 +376,7 @@
 	WidgetProgress.prototype.onExecute = function()
 	{
 		var v = this.getInputData(0);
-		if( v != undefined )
+		if( v !== undefined )
 			this.properties["value"] = v;
 	}
 
@@ -644,13 +644,13 @@
 
 		ctx.textAlign = this.properties["align"];
 		ctx.font = fontsize.toString() + "px " + this.properties["font"];
-		this.str = typeof(v) == 'number' ? v.toFixed(this.properties["decimals"]) : v;
+		this.str = typeof(v) === 'number' ? v.toFixed(this.properties["decimals"]) : v;
 
-		if( typeof(this.str) == 'string')
+		if( typeof(this.str) === 'string')
 		{
 			var lines = this.str.split("\\n");
 			for(var i in lines)
-				ctx.fillText(lines[i],this.properties["align"] == "left" ? 15 : this.size[0] - 15, fontsize * -0.15 + fontsize * (parseInt(i)+1) );
+				ctx.fillText(lines[i],this.properties["align"] === "left" ? 15 : this.size[0] - 15, fontsize * -0.15 + fontsize * (parseInt(i)+1) );
 		}
 
 		ctx.shadowColor = "transparent";
@@ -661,7 +661,7 @@
 	WidgetText.prototype.onExecute = function()
 	{
 		var v = this.getInputData(0);
-		if(v != null)
+		if(v !== null)
 			this.properties["value"] = v;
 		else
 			this.properties["value"] = "";
@@ -688,15 +688,15 @@
 
 	WidgetText.prototype.onWidget = function(e,widget)
 	{
-		if(widget.name == "resize")
+		if(widget.name === "resize")
 			this.resize();
-		else if (widget.name == "led_text")
+		else if (widget.name === "led_text")
 		{
 			this.properties["font"] = "Digital";
 			this.properties["glowSize"] = 4;
 			this.setDirtyCanvas(true);
 		}
-		else if (widget.name == "normal_text")
+		else if (widget.name === "normal_text")
 		{
 			this.properties["font"] = "Arial";
 			this.setDirtyCanvas(true);
@@ -706,7 +706,7 @@
 	WidgetText.prototype.onPropertyChanged = function(name,value)
 	{
 		this.properties[name] = value;
-		this.str = typeof(value) == 'number' ? value.toFixed(3) : value;
+		this.str = typeof(value) === 'number' ? value.toFixed(3) : value;
 		//this.resize();
 		return true;
 	}
@@ -727,7 +727,7 @@
 
 	WidgetPanel.prototype.createGradient = function(ctx)
 	{
-		if(this.properties["bgcolorTop"] == "" || this.properties["bgcolorBottom"] == "")
+		if(this.properties["bgcolorTop"] === "" || this.properties["bgcolorBottom"] === "")
 		{
 			this.lineargradient = 0;
 			return;
@@ -740,7 +740,7 @@
 
 	WidgetPanel.prototype.onDrawForeground = function(ctx)
 	{
-		if(this.lineargradient == null)
+		if(this.lineargradient === null)
 			this.createGradient(ctx);
 
 		if(!this.lineargradient)
@@ -769,7 +769,7 @@
 
 	WidgetPanel.prototype.onWidget = function(e,widget)
 	{
-		if(widget.name == "update")
+		if(widget.name === "update")
 		{
 			this.lineargradient = null;
 			this.setDirtyCanvas(true);

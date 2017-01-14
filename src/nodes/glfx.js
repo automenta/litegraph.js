@@ -1,5 +1,5 @@
 //Works with Litegl.js to create WebGL nodes
-if(typeof(LiteGraph) != "undefined")
+if(typeof(LiteGraph) !== "undefined")
 {
 	
 	// Texture Lens *****************************************
@@ -153,8 +153,8 @@ if(typeof(LiteGraph) != "undefined")
 		var precision = gl.UNSIGNED_BYTE;
 		if(this.properties.high_precision)
 			precision = gl.half_float_ext ? gl.HALF_FLOAT_OES : gl.FLOAT;			
-		if(!this._temp_texture || this._temp_texture.type != precision ||
-			this._temp_texture.width != tex.width || this._temp_texture.height != tex.height)
+		if(!this._temp_texture || this._temp_texture.type !== precision ||
+			this._temp_texture.width !== tex.width || this._temp_texture.height !== tex.height)
 			this._temp_texture = new GL.Texture( tex.width, tex.height, { type: precision, format: gl.RGBA, filter: gl.LINEAR });
 
 		//iterations
@@ -169,7 +169,7 @@ if(typeof(LiteGraph) != "undefined")
 			second_shader = LGraphFXBokeh._second_shader = new GL.Shader( LGraphFXBokeh._second_vertex_shader, LGraphFXBokeh._second_pixel_shader );
 
 		var points_mesh = this._points_mesh;
-		if(!points_mesh || points_mesh._width != tex.width || points_mesh._height != tex.height || points_mesh._spacing != 2)
+		if(!points_mesh || points_mesh._width !== tex.width || points_mesh._height !== tex.height || points_mesh._spacing !== 2)
 			points_mesh = this.createPointsMesh( tex.width, tex.height, 2 );
 
 		var screen_mesh = Mesh.getScreenQuad();
@@ -382,12 +382,12 @@ if(typeof(LiteGraph) != "undefined")
 			camera_planes = [1,100];
 
 		var noise = null;
-		if(fx == "noise")
+		if(fx === "noise")
 			noise = LGraphTexture.getNoiseTexture();
 
 		this._tex.drawTo( function() {
 			tex.bind(0);
-			if(fx == "noise")
+			if(fx === "noise")
 				noise.bind(1);
 
 			shader.uniforms({u_texture:0, u_noise:1, u_size: [tex.width, tex.height], u_rand:[ Math.random(), Math.random() ], u_value1: value1, u_value2: value2, u_camera_planes: camera_planes })

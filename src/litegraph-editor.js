@@ -56,7 +56,7 @@ Editor.prototype.addLoadCounter = function()
 
 	setInterval(function() {
 		meter.querySelector(".cpuload .fgload").style.width = ((2*self.graph.elapsed_time) * 90) + "px";
-		if(self.graph.status == LGraph.STATUS_RUNNING)
+		if(self.graph.status === LGraph.STATUS_RUNNING)
 			meter.querySelector(".gpuload .fgload").style.width = ((self.graphcanvas.render_time*10) * 90) + "px";
 		else
 			meter.querySelector(".gpuload .fgload").style.width = 4 + "px";
@@ -120,7 +120,7 @@ Editor.prototype.onPlayButton = function()
 	var graph = this.graph;
 	var button = this.root.querySelector("#playnode_button");
 
-	if(graph.status == LGraph.STATUS_STOPPED)
+	if(graph.status === LGraph.STATUS_STOPPED)
 	{
 		button.innerHTML = "<img src='imgs/icon-stop.png'/> Stop";
 		graph.start(1); 
