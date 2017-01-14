@@ -1220,8 +1220,14 @@ LGraph.prototype.configure = function(data, keep_old)
 	return error;
 }
 
+/** if url is falsy, clear */
 LGraph.prototype.load = function(url)
 {
+	if (!url) {
+		this.clear();
+		return;
+	}
+
 	var that = this;
 	var req = new XMLHttpRequest();
 	req.open('GET', url, true); 
